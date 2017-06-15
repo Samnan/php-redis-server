@@ -264,7 +264,7 @@ class Lists
         foreach ($keys as $key) {
             $ret = $this->$command($key);
             if ($ret !== null) {
-                return array($key, $ret);
+                return new \React\Promise\FulfilledPromise([$key, $ret]);
             }
         }
 
