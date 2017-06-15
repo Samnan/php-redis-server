@@ -2,6 +2,8 @@
 
 namespace Clue\Redis\Server;
 
+use ArrayObject;
+
 class Storage
 {
     private $storage = array();
@@ -89,6 +91,19 @@ class Storage
 
         unset($this->timeout[$key]);
         return $this->storage[$key] = new Type\RedisList();
+    }
+
+    public function getOrCreateHash($key)
+    {
+        if ($this->hasKey($key)) {
+            if (!$this->storage[$key] instanceof ArrayObject) {
+                throw new InvalidDatatypeException('WRONGTYPE Operation against a key holding the wrong kind of value');
+            }
+            return $this->storage[$key];
+        }
+
+        unset($this->timeout[$key]);
+        return $this->storage[$key] = new ArrayObject;
     }
 
     public function getStringOrNull($key)

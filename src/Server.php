@@ -54,6 +54,7 @@ class Server extends EventEmitter
             $business->addCommands(new Business\Lists($db, $loop));
             $business->addCommands(new Business\Server($this));
             $business->addCommands(new Business\Strings($db));
+            $business->addCommands(new Business\Hashes($db));
             $business->renameCommand('x_echo', 'echo');
         }
 
